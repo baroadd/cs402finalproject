@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html>
 <body>
+<p>
+    {% for result in var1 %}
+    {{result}}
+</p>
+    {% endfor %}
+
 <h1>{{var2}}</h1>
 <button onclick="myFunction()">Press it !</button>
 <p id="demo"></p>
 <script type="text/javascript">
 function myFunction() {
 
-    var funcName = "{{var1}}"
+    var funcName = {{var1|safe}}
     var temp = (`{{var2}}`).replace(/&amp;/g, "&").replace(/&gt;/g, ">").replace(/&lt;/g, "<").replace(/&quot;/g, '"').replace(/&#39;/g, "'") 
     //eval(temp.replace(/\.open\("GET",( )*"/,'.open("GET", "http://localhost:8000/?url='))
     eval(temp.replace(/\.open\("GET",( )*/gi,'.open("GET", ""+').replace(/\.open\("GET",( )*"/gi,'.open("GET", "http://localhost:8000/?url='))
-    eval(funcName)
+    for(i = 0 ;i<funcName.length;i++){
+        temp = funcName[i]
+        eval(temp)
+    }
+    
+    
+    
 
 }
 </script>
